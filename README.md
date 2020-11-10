@@ -33,8 +33,8 @@ Any http/https traffic that can use a proxy
 ### Using curl
 
 ```
-kubectl run curl-example --rm -i --tty --image curlimages/curl \
-    -- curl -x cannedsquid www.google.com
+kubectl run curl-example --rm -i --image curlimages/curl \
+    -- -x cannedsquid www.google.com
 ```
 
 
