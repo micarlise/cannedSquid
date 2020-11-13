@@ -49,6 +49,20 @@ spec:
             periodSeconds: 10
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+        {{- if .Values.metrics.enabled }}
+        - name: metrics-exporter
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "boynux/squid-exporter:latest"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: metrics
+              containerPort: {{ .Values.metrics.port }}
+              protocol: TCP
+          env:
+            - name: SQUID_EXPORTER_LISTEN 
+              value: ":{{ .Values.metrics.port }}"
+        {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
