@@ -4,7 +4,7 @@ image:
   repository: cannedsquid
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "v0.1"
+  tag: "v0.2"
 
 imagePullSecrets: []
 nameOverride: ""
@@ -19,7 +19,14 @@ serviceAccount:
   # If not set and create is true, a name is generated using the fullname template
   name: ""
 
-podAnnotations: {}
+metrics:
+  enabled: true
+  port: 9301
+
+podAnnotations: 
+    prometheus.io/scrape: "true"
+    prometheus.io/path: /metrics
+    prometheus.io/port: "9301"
 
 podSecurityContext: {}
   # fsGroup: 2000
